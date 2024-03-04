@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz de Perguntas e Respostas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="quiz-container">
+    <h1>Quiz de Perguntas e Respostas</h1>
+    <div id="Pergunta"></div>
+    <div id="Opcoes"></div>
+    <div id="Resultado"></div>
+</div>
+
+<script>
+    const perguntas = [
+    {
+    Pergunta: "Qual é a marca de automóveis que produziu o modelo 'Opala'?",
+    Opcoes: ["Chevrolet", "Ford", "Fiat", "Volkswagen"],
+    Resposta: "Chevrolet"
+},
+{
+    Pergunta: "Em que ano foi lançado o Volkswagen Fusca no Brasil?",
+    Opcoes: ["1950", "1960", "1970", "1980"],
+    Resposta: "1950"
+},
+{
+    Pergunta: "Qual era o modelo de automóvel produzido pela DKW no Brasil?",
+    Opcoes: ["Opala", "Brasília", "Cadete", "Fusca"],
+    Resposta: "Vemaguet"
+},
+{
+    Pergunta: "Qual é o modelo de carro antigo conhecido como 'carro de boi'?",
+    Opcoes: ["Opala", "Brasília", "Cadete", "Fusca"],
+    Resposta: "Opala"
+}
+        // Adicione mais perguntas aqui...
+    ];
+
+    const perguntaElemento = document.getElementById("Pergunta");
+    const opcoesElemento = document.getElementById("Opcoes");
+    const resultadoElemento = document.getElementById("Resultado");
+
+    let indicePerguntaAtual = 0;
+
+    function carregarPergunta() {
+        const perguntaAtual = perguntas[indicePerguntaAtual];
+        perguntaElemento.textContent = perguntaAtual.Pergunta;
+
+        opcoesElemento.innerHTML = "";
+        perguntaAtual.Opcoes.forEach(opcao => {
+            const botao = document.createElement("button");
+            botao.textContent = opcao;
+            botao.addEventListener("click", () => verificarResposta(opcao));
+            opcoesElemento.appendChild(botao);
+        });
+    }
+
+    function verificarResposta(respostaSelecionada) {
+        const perguntaAtual = perguntas[indicePerguntaAtual];
+        if (respostaSelecionada === perguntaAtual.Resposta) {
+            resultadoElemento.textContent = "Resposta correta";
+            resultadoElemento.className = "Correto";
+        } else {
+            resultadoElemento.textContent = "Resposta incorreta. A resposta correta é: " + perguntaAtual.Resposta;
+            resultadoElemento.className = "Incorreto";
+        }
+
+        // Avança para a próxima pergunta ou finaliza o quiz 
+        indicePerguntaAtual++;
+        if (indicePerguntaAtual < perguntas.length) {
+            setTimeout(carregarPergunta, 2000); // Carrega próxima pergunta após 2 segundos
+        } else {
+            resultadoElemento.textContent = "Quiz concluído";
+            resultadoElemento.className = "";
+        }
+    }
+
+    // Carrega a primeira pergunta quando a página carrega
+    carregarPergunta();
+</script>
+
+<footer>
+    <p>Desenvolvido por Lucas Oliveira Maciel - 04/03/24 15:16</p>
+</footer>
+
+</body>
+</html>
